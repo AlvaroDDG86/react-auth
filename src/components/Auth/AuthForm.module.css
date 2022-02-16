@@ -70,3 +70,16 @@
   background-color: transparent;
   color: #ae82cc;
 }
+
+.error {
+  color: red;
+  border: solid 1px red;
+  border-radius: 6px;
+  background-color: rgb(255, 221, 221);
+  padding: 0.3rem 1rem;
+}
+
+.loading {
+  font-size: 1.2em;
+  color: white;
+}
