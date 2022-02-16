@@ -19,52 +19,32 @@ const AuthForm = () => {
     const emailVal = emailRef.current.value
     const passwordVal = passwordRef.current.value
     setIsLoading(true)
-    if (isLogin) {
-      // fetch('https://identitytoolkit.googleapis.com/v1/accounts:login?key=AIzaSyAliawKwwVuJ5J_71cWp30PJ5wy-0XTmsE', {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     email: emailVal,
-      //     password: passwordVal
-      //   }),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // }).then(async res => {
-      //   const data = await res.json()
-      //   if (res.ok) {
-      //     console.log(data)
-      //   } else {
-      //     setError(data.error.message)
-      //   }
-      // }).catch((error) => {
-      //   setError(error.message)
-      // }).finally(() => {
-      //   setIsLoading(false)
-      // })
-    } else {
-      fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAliawKwwVuJ5J_71cWp30PJ5wy-0XTmsE', {
-        method: 'POST',
-        body: JSON.stringify({
-          email: emailVal,
-          password: passwordVal,
-          returnSecureToken: true
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          console.log(data)
-        } else {
-          setError(data.error.message)
-        }
-      }).catch((error) => {
-        setError(error.message)
-      }).finally(() => {
-        setIsLoading(false)
-      })
-    }
+    setError(null)
+    const URL = isLogin ? 
+                'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAliawKwwVuJ5J_71cWp30PJ5wy-0XTmsE' :
+                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAliawKwwVuJ5J_71cWp30PJ5wy-0XTmsE'
+    fetch(URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: emailVal,
+        password: passwordVal,
+        returnSecureToken: true
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(async res => {
+      const data = await res.json()
+      if (res.ok) {
+        console.log(data)
+      } else {
+        setError(data.error.message)
+      }
+    }).catch((error) => {
+      setError(error.message)
+    }).finally(() => {
+      setIsLoading(false)
+    })
   }
 
   return (
