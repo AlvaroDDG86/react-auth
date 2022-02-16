@@ -3,8 +3,10 @@ import AuthContext from '../../store/AuthContext';
 import { API_KEY } from '../../shared/constants';
 
 import classes from './AuthForm.module.css';
+import { useHistory } from 'react-router-dom';
 
 const AuthForm = () => {
+  const history = useHistory()
   const { isLoggedIn, login } = useContext(AuthContext)
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -40,6 +42,7 @@ const AuthForm = () => {
       const data = await res.json()
       if (res.ok) {
         login(data.idToken)
+        history.replace('/')
       } else {
         setError(data.error.message)
       }

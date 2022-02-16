@@ -1,11 +1,19 @@
 import { useContext, Fragment } from 'react'
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../store/AuthContext';
 
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
+  const history = useHistory()
   const { isLoggedIn, logout } = useContext(AuthContext)
+
+  const logoutHandler = () => {
+    logout()
+    history.replace('/')
+  }
+  
   let links = (<li><Link to='/auth'>Login</Link></li>)
   if (isLoggedIn) {
     links = (
@@ -14,7 +22,7 @@ const MainNavigation = () => {
           <Link to='/profile'>Profile</Link>
         </li>
         <li>
-          <button onClick={logout}>Logout</button>
+          <button onClick={logoutHandler}>Logout</button>
         </li>
       </Fragment>
     )
