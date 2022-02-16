@@ -1,8 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import AuthContext from '../../store/AuthContext';
 
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
+  const { isLoggedIn, login } = useContext(AuthContext)
   const emailRef = useRef()
   const passwordRef = useRef()
   const [isLogin, setIsLogin] = useState(true);
@@ -36,7 +38,7 @@ const AuthForm = () => {
     }).then(async res => {
       const data = await res.json()
       if (res.ok) {
-        console.log(data)
+        login(data.idToken)
       } else {
         setError(data.error.message)
       }
@@ -49,7 +51,7 @@ const AuthForm = () => {
 
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <h1>{isLogin ? 'Login' : 'Sign Up'} { isLoggedIn.toString() }</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor='email'>Your Email</label>
