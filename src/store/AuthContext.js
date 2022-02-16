@@ -7,6 +7,7 @@ const AuthContext = React.createContext({
 })
 
 export const AuthContextProvider = (props) => {
+    // It doesn't matter if this is null
     const initialToken = localStorage.getItem('idToken')
     const [token, setToken] = useState(initialToken)
 
